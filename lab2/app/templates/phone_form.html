@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Валидация номера телефона - {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h1>Валидация номера телефона</h1>
+        
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Проверка номера телефона</h5>
+                
+                <form method="POST" action="{{ url_for('phone_form') }}">
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Номер телефона</label>
+                        <input type="text" 
+                               class="form-control {% if error_message %}is-invalid{% endif %}" 
+                               id="phone" 
+                               name="phone" 
+                               value="{{ phone if phone else '' }}"
+                               placeholder="Введите номер телефона">
+                        
+                        {% if error_message %}
+                        <div class="invalid-feedback">
+                            {{ error_message }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Проверить</button>
+                </form>
+                
+                {% if formatted_phone %}
+                <div class="alert alert-success mt-3">
+                    <h6>Номер телефона успешно проверен!</h6>
+                    <p class="mb-0">Отформатированный номер: <strong>{{ formatted_phone }}</strong></p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Правила валидации</h5>
+                <ul>
+                    <li>Номер должен содержать <strong>10-11 цифр</strong></li>
+                    <li>Если номер начинается с <strong>+7</strong> или <strong>8</strong> - должно быть <strong>11 цифр</strong></li>
+                    <li>В остальных случаях - <strong>10 цифр</strong></li>
+                    <li>Разрешенные дополнительные символы: <strong>пробелы, круглые скобки, дефисы, точки, +</strong></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Примеры допустимых форматов</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>11 цифр (с кодом страны):</h6>
+                        <ul class="list-unstyled">
+                            <li><code>+7 (123) 456-78-90</code></li>
+                            <li><code>8(123)4567890</code></li>
+                            <li><code>+7 123 456 78 90</code></li>
+                            <li><code>8-123-456-78-90</code></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>10 цифр (без кода страны):</h6>
+                        <ul class="list-unstyled">
+                            <li><code>123.456.78.90</code></li>
+                            <li><code>123-456-78-90</code></li>
+                            <li><code>(123) 456-78-90</code></li>
+                            <li><code>123 456 78 90</code></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Параметры URL - {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Параметры URL</h1>
+        
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Текущие параметры</h5>
+                {% if params %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Параметр</th>
+                                <th>Значение</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for key, value in params.items() %}
+                            <tr>
+                                <td><code>{{ key }}</code></td>
+                                <td>{{ value }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="text-muted">Параметры URL не найдены.</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Примеры использования</h5>
+                <p>Добавьте параметры к URL, чтобы увидеть, как они отображаются:</p>
+                <ul>
+                    <li><a href="{{ url_for('url_params') }}?name=John&age=25">?name=John&age=25</a></li>
+                    <li><a href="{{ url_for('url_params') }}?search=flask&category=web">?search=flask&category=web</a></li>
+                    <li><a href="{{ url_for('url_params') }}?lang=ru&debug=true">?lang=ru&debug=true</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Добавить параметры</h5>
+                <form method="GET" action="{{ url_for('url_params') }}">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" name="param1" placeholder="Параметр 1" value="{{ request.args.get('param1', '') }}">
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" name="param2" placeholder="Параметр 2" value="{{ request.args.get('param2', '') }}">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary">Отправить</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

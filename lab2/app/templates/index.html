@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Лабораторная работа №2</h1>
+        <p class="lead">Веб-приложение Flask для отображения данных запросов и валидации номеров телефонов</p>
+        
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Отображение данных запроса</h5>
+                        <p class="card-text">Просмотр различных параметров HTTP запроса:</p>
+                        <ul>
+                            <li><a href="{{ url_for('url_params') }}">Параметры URL</a></li>
+                            <li><a href="{{ url_for('headers') }}">Заголовки запроса</a></li>
+                            <li><a href="{{ url_for('cookies') }}">Cookies</a></li>
+                            <li><a href="{{ url_for('form_params') }}">Параметры формы</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Валидация номера телефона</h5>
+                        <p class="card-text">Форма для проверки и форматирования номеров телефонов с обработкой ошибок.</p>
+                        <a href="{{ url_for('phone_form') }}" class="btn btn-primary">Перейти к форме</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Информация об авторе</h5>
+                        <p class="card-text">
+                            <strong>Автор:</strong> Чикита Родион Юрьевич<br>
+                            <strong>Группа:</strong> 221-331<br>
+                            <strong>Задание:</strong> Лабораторная работа №2 по веб-разработке
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
