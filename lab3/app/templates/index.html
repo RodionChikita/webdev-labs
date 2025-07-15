@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Лабораторная работа №3</h1>
+        <p class="lead">Веб-приложение Flask с аутентификацией и счетчиком посещений</p>
+        
+        {% if current_user.is_authenticated %}
+        <div class="alert alert-success">
+            <h4>Добро пожаловать, {{ current_user.username }}!</h4>
+            <p>Вы успешно вошли в систему и имеете доступ к секретной странице.</p>
+        </div>
+        {% endif %}
+        
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Счётчик посещений</h5>
+                        <p class="card-text">Страница, которая отслеживает количество ваших посещений с использованием сессий.</p>
+                        <a href="{{ url_for('counter') }}" class="btn btn-primary">Перейти к счётчику</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Аутентификация</h5>
+                        <p class="card-text">
+                            {% if current_user.is_authenticated %}
+                                Вы вошли как: <strong>{{ current_user.username }}</strong>
+                            {% else %}
+                                Войдите в систему для доступа к секретной странице.
+                            {% endif %}
+                        </p>
+                        {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('secret') }}" class="btn btn-success">Секретная страница</a>
+                            <a href="{{ url_for('logout') }}" class="btn btn-outline-secondary">Выйти</a>
+                        {% else %}
+                            <a href="{{ url_for('login') }}" class="btn btn-primary">Войти</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Информация о приложении</h5>
+                        <p class="card-text">
+                            <strong>Автор:</strong> Чикита Родион Юрьевич<br>
+                            <strong>Группа:</strong> 221-331<br>
+                            <strong>Задание:</strong> Лабораторная работа №3 по веб-разработке
+                        </p>
+                        <h6>Реализованный функционал:</h6>
+                        <ul>
+                            <li>Счётчик посещений с использованием сессий</li>
+                            <li>Аутентификация пользователей с Flask-Login</li>
+                            <li>Секретная страница для аутентифицированных пользователей</li>
+                            <li>Навбар с условными ссылками</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
