@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Информация о запросе - {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Информация о запросе</h1>
+        
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Основная информация</h5>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th>Метод запроса:</th>
+                            <td>{{ request.method }}</td>
+                        </tr>
+                        <tr>
+                            <th>URL:</th>
+                            <td>{{ request.url }}</td>
+                        </tr>
+                        <tr>
+                            <th>Базовый URL:</th>
+                            <td>{{ request.base_url }}</td>
+                        </tr>
+                        <tr>
+                            <th>Путь:</th>
+                            <td>{{ request.path }}</td>
+                        </tr>
+                        <tr>
+                            <th>Строка запроса:</th>
+                            <td>{{ request.query_string.decode('utf-8') or 'Нет параметров' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Схема:</th>
+                            <td>{{ request.scheme }}</td>
+                        </tr>
+                        <tr>
+                            <th>Хост:</th>
+                            <td>{{ request.host }}</td>
+                        </tr>
+                        <tr>
+                            <th>Удаленный адрес:</th>
+                            <td>{{ request.remote_addr }}</td>
+                        </tr>
+                        <tr>
+                            <th>User Agent:</th>
+                            <td>{{ request.user_agent }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Навигация</h5>
+                        <a href="{{ url_for('url_params') }}" class="btn btn-primary me-2">Параметры URL</a>
+                        <a href="{{ url_for('headers') }}" class="btn btn-primary me-2">Заголовки</a>
+                        <a href="{{ url_for('cookies') }}" class="btn btn-primary me-2">Cookies</a>
+                        <a href="{{ url_for('form_params') }}" class="btn btn-primary">Параметры формы</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
