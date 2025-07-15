@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Счётчик посещений - {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body text-center">
+                <h1 class="card-title">Счётчик посещений</h1>
+                <div class="mt-4">
+                    <h2 class="display-4 text-primary">{{ count }}</h2>
+                    <p class="lead">
+                        {% if count == 1 %}
+                            Это ваше первое посещение данной страницы.
+                        {% else %}
+                            Вы посетили эту страницу {{ count }} раз.
+                        {% endif %}
+                    </p>
+                </div>
+                
+                <div class="mt-4">
+                    <a href="{{ url_for('counter') }}" class="btn btn-primary">Обновить счётчик</a>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">Вернуться на главную</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Информация о счётчике</h5>
+                <p class="card-text">
+                    Этот счётчик использует глобальный объект <code>session</code> для отслеживания 
+                    количества посещений данной страницы. Данные сохраняются в течение сессии 
+                    и сбрасываются после закрытия браузера (если не включена опция "Запомнить меня").
+                </p>
+                <p class="card-text">
+                    <strong>Текущий статус:</strong>
+                    {% if current_user.is_authenticated %}
+                        <span class="badge bg-success">Вы вошли в систему</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Вы не вошли в систему</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
