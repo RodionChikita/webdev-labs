@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Вход в систему - {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-center">Вход в систему</h2>
+                
+                <form method="POST" action="{{ url_for('login') }}">
+                    <div class="mb-3">
+                        <label for="login" class="form-label">Логин</label>
+                        <input type="text" class="form-control" id="login" name="login" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Пароль</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                        <label class="form-check-label" for="remember">
+                            Запомнить меня
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">Войти</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Данные для входа</h5>
+                <p class="card-text">
+                    Для тестирования используйте следующие данные:
+                </p>
+                <h6>Администратор (полные права):</h6>
+                <ul>
+                    <li><strong>Логин:</strong> admin</li>
+                    <li><strong>Пароль:</strong> Admin123!</li>
+                </ul>
+                <h6>Обычный пользователь (только своя запись):</h6>
+                <ul>
+                    <li><strong>Логин:</strong> user1</li>
+                    <li><strong>Пароль:</strong> User123!</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
