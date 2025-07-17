@@ -1,0 +1,68 @@
+{% macro render_user_form(action, user=None, roles=[], errors={}, form_data={}, show_auth_fields=True) %}
+<form method="POST" action="{{ action }}">
+    {% if show_auth_fields %}
+    <div class="mb-3">
+        <label for="login" class="form-label">Логин <span class="text-danger">*</span></label>
+        <input type="text" class="form-control {{ 'is-invalid' if errors.login }}" id="login" name="login" 
+               value="{{ form_data.login if form_data.login else (user.login if user else '') }}" required>
+        {% if errors.login %}
+        <div class="invalid-feedback">{{ errors.login }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="mb-3">
+        <label for="password" class="form-label">Пароль <span class="text-danger">*</span></label>
+        <input type="password" class="form-control {{ 'is-invalid' if errors.password }}" id="password" name="password" required>
+        {% if errors.password %}
+        <div class="invalid-feedback">{{ errors.password }}</div>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    <div class="mb-3">
+        <label for="last_name" class="form-label">Фамилия <span class="text-danger">*</span></label>
+        <input type="text" class="form-control {{ 'is-invalid' if errors.last_name }}" id="last_name" name="last_name" 
+               value="{{ form_data.last_name if form_data.last_name else (user.last_name if user else '') }}" required>
+        {% if errors.last_name %}
+        <div class="invalid-feedback">{{ errors.last_name }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="mb-3">
+        <label for="first_name" class="form-label">Имя <span class="text-danger">*</span></label>
+        <input type="text" class="form-control {{ 'is-invalid' if errors.first_name }}" id="first_name" name="first_name" 
+               value="{{ form_data.first_name if form_data.first_name else (user.first_name if user else '') }}" required>
+        {% if errors.first_name %}
+        <div class="invalid-feedback">{{ errors.first_name }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="mb-3">
+        <label for="middle_name" class="form-label">Отчество</label>
+        <input type="text" class="form-control {{ 'is-invalid' if errors.middle_name }}" id="middle_name" name="middle_name" 
+               value="{{ form_data.middle_name if form_data.middle_name else (user.middle_name if user else '') }}">
+        {% if errors.middle_name %}
+        <div class="invalid-feedback">{{ errors.middle_name }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="mb-3">
+        <label for="role_id" class="form-label">Роль</label>
+        <select class="form-select {{ 'is-invalid' if errors.role_id }}" id="role_id" name="role_id">
+            <option value="">Выберите роль</option>
+            {% for role in roles %}
+            <option value="{{ role.id }}" 
+                    {% if (form_data.role_id and form_data.role_id|int == role.id) or (user and user.role_id == role.id) %}selected{% endif %}>
+                {{ role.name }}
+            </option>
+            {% endfor %}
+        </select>
+        {% if errors.role_id %}
+        <div class="invalid-feedback">{{ errors.role_id }}</div>
+        {% endif %}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endmacro %} 
