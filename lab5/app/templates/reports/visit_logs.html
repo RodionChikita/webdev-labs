@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Журнал посещений{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col">
+            <h1>Журнал посещений</h1>
+            
+            {% if current_user.can_view_all_logs() %}
+            <div class="mb-3">
+                <a href="{{ url_for('reports.pages_report') }}" class="btn btn-info">Отчёт по страницам</a>
+                <a href="{{ url_for('reports.users_report') }}" class="btn btn-info">Отчёт по пользователям</a>
+            </div>
+            {% endif %}
+            
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>№</th>
+                            <th>Пользователь</th>
+                            <th>Страница</th>
+                            <th>Дата</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in logs.items %}
+                        <tr>
+                            <td>{{ (logs.page - 1) * logs.per_page + loop.index }}</td>
+                            <td>
+                                {% if log.user %}
+                                    {{ log.user.get_full_name() }}
+                                {% else %}
+                                    Неаутентифицированный пользователь
+                                {% endif %}
+                            </td>
+                            <td>{{ log.path }}</td>
+                            <td>{{ log.created_at.strftime('%d.%m.%Y %H:%M:%S') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Пагинация -->
+            {% if logs.pages > 1 %}
+            <nav aria-label="Навигация по страницам">
+                <ul class="pagination justify-content-center">
+                    {% if logs.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('reports.visit_logs', page=logs.prev_num) }}">&laquo; Предыдущая</a>
+                    </li>
+                    {% endif %}
+                    
+                    {% for page_num in logs.iter_pages() %}
+                        {% if page_num %}
+                            {% if page_num != logs.page %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ url_for('reports.visit_logs', page=page_num) }}">{{ page_num }}</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ page_num }}</span>
+                            </li>
+                            {% endif %}
+                        {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if logs.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('reports.visit_logs', page=logs.next_num) }}">Следующая &raquo;</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+            
+            <div class="mt-4">
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">Назад</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
