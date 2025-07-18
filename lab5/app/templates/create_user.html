@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% from "user_form.html" import render_user_form %}
+
+{% block title %}Создание пользователя - {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h2>Создание нового пользователя</h2>
+            </div>
+            <div class="card-body">
+                {{ render_user_form(url_for('create_user'), roles=roles, errors=errors, form_data=form_data, show_auth_fields=True) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

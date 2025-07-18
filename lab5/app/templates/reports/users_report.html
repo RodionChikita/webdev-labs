@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Отчёт по пользователям{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col">
+            <h1>Отчёт по пользователям</h1>
+            
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>№</th>
+                            <th>Пользователь</th>
+                            <th>Количество посещений</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user_id, last_name, first_name, middle_name, count in user_stats %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ [last_name, first_name, middle_name] | select | join(' ') }}</td>
+                            <td>{{ count }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% if unauth_count > 0 %}
+                        <tr>
+                            <td>{{ user_stats|length + 1 }}</td>
+                            <td>Неаутентифицированный пользователь</td>
+                            <td>{{ unauth_count }}</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mt-4">
+                <a href="{{ url_for('reports.export_users') }}" class="btn btn-success">Экспорт в CSV</a>
+                <a href="{{ url_for('reports.visit_logs') }}" class="btn btn-secondary">Назад к журналу</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
