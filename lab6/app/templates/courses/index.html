@@ -31,7 +31,7 @@
         {% for course in courses %}
             <div class="row p-3 border rounded mb-3" data-url="{{ url_for('courses.show', course_id=course.id) }}">
                 <div class="col-md-3 mb-3 mb-md-0 d-flex align-items-center justify-content-center">
-                    <div class="course-logo" style="background-image: url({{ url_for('image', image_id=course.background_image_id) }});">
+                    <div class="course-logo" style="background-image: url({% if course.background_image_id %}{{ url_for('image', image_id=course.background_image_id) }}{% else %}{{ url_for('static', filename='images/default-course.jpg') }}{% endif %});">
                     </div>
                 </div>
                 <div class="col-md-9 align-items-center">
