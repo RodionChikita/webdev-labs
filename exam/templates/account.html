@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Личный кабинет - TechStore{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="account-layout">
+        <h1>Заказы</h1>
+        
+        <div id="orders-loading" class="loading" style="display: none;">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>Загрузка заказов...</span>
+        </div>
+        
+        <div id="no-orders" class="no-orders" style="display: none;">
+            <i class="fas fa-receipt"></i>
+            <h3>У вас пока нет заказов</h3>
+            <p>Перейдите в каталог, чтобы сделать первый заказ.</p>
+            <a href="{{ url_for('index') }}" class="btn btn-primary">Перейти в каталог</a>
+        </div>
+        
+        <div id="orders-table-container" class="orders-table-container">
+            <table id="orders-table" class="orders-table">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Дата оформления</th>
+                        <th>Состав заказа</th>
+                        <th>Стоимость</th>
+                        <th>Дата доставки</th>
+                        <th>Интервал</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-list">
+                    <!-- Заказы будут загружены через JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для просмотра и редактирования заказов -->
+<div id="order-modal" class="modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Заказ</h2>
+        </div>
+        <div class="modal-body">
+            <!-- Содержимое модального окна будет загружено через JavaScript -->
+        </div>
+        <div class="modal-footer">
+            <button id="save-order-btn" class="btn btn-primary" style="display: none;">
+                Сохранить
+            </button>
+            <button class="modal-close btn btn-secondary" type="button">
+                Закрыть
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/account.js') }}"></script>
+{% endblock %} 

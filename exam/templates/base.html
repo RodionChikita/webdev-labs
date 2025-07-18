@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TechStore - Интернет-магазин{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="{{ url_for('index') }}">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>TechStore</span>
+                    </a>
+                </div>
+                
+                <div class="search-bar">
+                    <div class="search-container">
+                        <input type="text" id="search-input" placeholder="Поиск товаров...">
+                        <button type="button" id="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <div id="autocomplete-list" class="autocomplete-list"></div>
+                    </div>
+                </div>
+                
+                <div class="header-actions">
+                    <a href="{{ url_for('cart') }}" class="header-link">
+                        <i class="fas fa-shopping-basket"></i>
+                        <span>Корзина</span>
+                        <span id="cart-count" class="cart-count">0</span>
+                    </a>
+                    <a href="{{ url_for('account') }}" class="header-link">
+                        <i class="fas fa-user"></i>
+                        <span>Личный кабинет</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="notification-area" class="notification-area"></div>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>TechStore</h3>
+                    <p>Ваш надежный партнер в мире технологий</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <p><i class="fas fa-phone"></i> +7 (495) 123-45-67</p>
+                    <p><i class="fas fa-envelope"></i> info@techstore.ru</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Москва, ул. Большая Семёновская, 38</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Время работы</h4>
+                    <p>Пн-Пт: 9:00 - 21:00</p>
+                    <p>Сб-Вс: 10:00 - 20:00</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 TechStore. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальные окна -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title">Просмотр заказа</h2>
+            <div id="modal-body">
+                <!-- Содержимое модального окна -->
+            </div>
+            <div class="modal-actions">
+                <button id="modal-save" class="btn btn-primary" style="display: none;">Сохранить</button>
+                <button id="modal-close" class="btn btn-secondary">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <h2>Подтверждение</h2>
+            <p id="confirm-message">Вы уверены, что хотите удалить заказ?</p>
+            <div class="modal-actions">
+                <button id="confirm-yes" class="btn btn-danger">Да</button>
+                <button id="confirm-no" class="btn btn-secondary">Нет</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/api.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html> 

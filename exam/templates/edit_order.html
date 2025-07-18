@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Редактирование заказа - TechStore{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="cart-layout">
+        <section class="cart-section">
+            <h1>Редактирование заказа #<span id="order-number">{{ request.view_args.order_id }}</span></h1>
+
+            <div id="order-loading" class="loading" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Загрузка заказа...</span>
+            </div>
+
+            <div id="order-items" class="cart-items">
+                <!-- Товары заказа будут загружены через JavaScript -->
+            </div>
+        </section>
+        
+        <section class="order-section">
+            <h2>Информация о заказе</h2>
+
+            <form id="edit-order-form">
+                <div class="form-group">
+                    <label for="full-name">Имя *</label>
+                    <input type="text" id="full-name" name="full_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Телефон *</label>
+                    <input type="text" id="phone" name="phone" required placeholder="+7 (999) 123-45-67">
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="subscribe" name="subscribe">
+                        <span>Согласие на получение рассылки</span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="delivery-address">Адрес доставки *</label>
+                    <input type="text" id="delivery-address" name="delivery_address" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="delivery-date">Дата доставки *</label>
+                    <input type="date" id="delivery-date" name="delivery_date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="delivery-interval">Временной интервал доставки *</label>
+                    <select id="delivery-interval" name="delivery_interval" required>
+                        <option value="">Выберите интервал</option>
+                        <option value="08:00-12:00">08:00-12:00</option>
+                        <option value="12:00-14:00">12:00-14:00</option>
+                        <option value="14:00-18:00">14:00-18:00</option>
+                        <option value="18:00-22:00">18:00-22:00</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="comment">Комментарий к заказу</label>
+                    <textarea id="comment" name="comment" rows="3" placeholder="Дополнительные пожелания..."></textarea>
+                </div>
+
+                <div class="order-summary">
+                    <div class="summary-row">
+                        <span>Стоимость товаров:</span>
+                        <span id="items-total">0 ₽</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Итоговая стоимость:</span>
+                        <span id="total-cost">0 ₽</span>
+                    </div>
+                </div>
+                
+                <div class="order-actions">
+                    <button type="submit" class="btn btn-primary btn-large" id="save-order">
+                        Сохранить изменения
+                    </button>
+                    <a href="/account" class="btn btn-secondary btn-large">
+                        Отмена
+                    </a>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/api.js') }}"></script>
+<script src="{{ url_for('static', filename='js/edit_order.js') }}"></script>
+{% endblock %} 
