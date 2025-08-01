@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-8">
+            <h1 class="my-4">{{ post.title }}</h1>
+            
+            <div class="text-muted mb-3">
+                Опубликовано {{ post.date.strftime('%d.%m.%Y') }} автором {{ post.author }}
+            </div>
+            
+            <img class="img-fluid rounded" src="{{ url_for('static', filename='images/' + post.image_id) }}" alt="{{ post.title }}">
+            
+            <div class="mt-4">
+                <p>{{ post.text }}</p>
+            </div>
+            
+            <hr>
+
+            <div class="comment-form mb-5">
+                <h4>Оставьте комментарий</h4>
+                <form method="post" action="#">
+                    <div class="form-group mb-3">
+                        <label for="commentText" class="form-label">Ваш комментарий:</label>
+                        <textarea class="form-control" id="commentText" name="comment" rows="4" placeholder="Введите ваш комментарий..." required></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="authorName" class="form-label">Ваше имя:</label>
+                        <input type="text" class="form-control" id="authorName" name="author" placeholder="Введите ваше имя..." required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+            </div>
+            
+            <hr>
+            
+            <div class="comments-section">
+                <h3>Комментарии</h3>
+                {% for comment in post.comments %}
+                    <div class="d-flex mb-4">
+                        <div class="flex-shrink-0">
+                            <img src="{{ url_for('static', filename='images/avatar.jpg') }}" class="rounded-circle" width="50" height="50" alt="Avatar">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mt-0">{{ comment.author }} <small class="text-muted"><i>Комментарий</i></small></h5>
+                            <p>{{ comment.text }}</p>
+                            
+                            {% if comment.replies %}
+                                {% for reply in comment.replies %}
+                                    <div class="d-flex mt-3">
+                                        <div class="flex-shrink-0">
+                                            <img src="{{ url_for('static', filename='images/avatar.jpg') }}" class="rounded-circle" width="40" height="40" alt="Avatar">
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <h6 class="mt-0">{{ reply.author }} <small class="text-muted"><i>Ответ</i></small></h6>
+                                            <p>{{ reply.text }}</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <hr>
+                {% endfor %}
+            </div>
+            
+            <div class="mt-4">
+                <a href="{{ url_for('posts') }}" class="btn btn-secondary">&larr; Назад к постам</a>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    Об авторе
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ post.author }}</p>
+                    <a href="{{ url_for('about') }}" class="btn btn-primary">Узнать больше</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %} 
