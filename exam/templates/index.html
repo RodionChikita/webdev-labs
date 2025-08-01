@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Каталог товаров - TechStore{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="catalog-layout">
+        <aside class="sidebar">
+            <div class="filter-section">
+                <h3>Фильтры</h3>
+                <form id="filter-form">
+                    <div class="filter-group">
+                        <h4>Категория товара</h4>
+                        <div class="checkbox-group" id="category-filters">
+                            <!-- Категории будут загружены через JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h4>Стоимость</h4>
+                        <div class="price-range">
+                            <input type="number" id="price-min" placeholder="От" min="0">
+                            <span>-</span>
+                            <input type="number" id="price-max" placeholder="До" min="0">
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="discount-only">
+                            <span>Товары со скидкой</span>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Применить</button>
+                    <button type="button" id="reset-filters" class="btn btn-secondary">Сбросить</button>
+                </form>
+            </div>
+        </aside>
+        
+        <main class="catalog-main">
+            <div class="catalog-header">
+                <h1>Каталог</h1>
+                <div class="catalog-controls">
+                    <select id="sort-select">
+                        <option value="default">По умолчанию</option>
+                        <option value="price-asc">По цене (возрастание)</option>
+                        <option value="price-desc">По цене (убывание)</option>
+                        <option value="rating-desc">По рейтингу</option>
+                        <option value="name-asc">По названию (А-Я)</option>
+                        <option value="name-desc">По названию (Я-А)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div id="loading" class="loading" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Загрузка товаров...</span>
+            </div>
+            
+            <div id="no-results" class="no-results" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>Нет товаров, соответствующих вашему запросу</h3>
+                <p>Попробуйте изменить параметры поиска или сбросить фильтры</p>
+            </div>
+            
+            <div id="products-grid" class="products-grid">
+                <!-- Товары будут загружены через JavaScript -->
+            </div>
+            
+            <div class="load-more-container">
+                <button id="load-more" class="btn btn-secondary" style="display: none;">
+                    Загрузить ещё
+                </button>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/catalog.js') }}"></script>
+{% endblock %} 
